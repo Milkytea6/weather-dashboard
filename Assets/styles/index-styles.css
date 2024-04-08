@@ -1,0 +1,24 @@
+
+:root{
+    --right-color: linear-gradient(to right, rgb(38, 38, 110), #333333);
+    --left-color: linear-gradient(to left, rgb(38, 38, 110), #333333);
+}
+#dashboard{
+    background-color: #888888;
+}
+#search-section{
+    width: 30vw;   
+}
+#header{
+    background: var(--right-color);
+}
+#city-buttons button{
+    color:azure;
+    background: var(--right-color);
+    margin: 5px 0px;
+    box-shadow: 2px 2px black; 
+}
+#city-buttons button:hover{
+
+    background: var(--left-color);
+}
