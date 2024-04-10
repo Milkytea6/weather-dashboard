@@ -25,26 +25,31 @@ function handleSearchForm(event) {
     // API to find the coordinates of the city.
     const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
     // Fetch data from the weatherAPI
-    fetch(weatherUrl)
-        .then(function (response){
-            if (!response.ok){
-            throw response.json();
-            }
-            return response.json();
-        })
 
+    fetch(weatherUrl)
+    .then(function (response){
+        if (!response.ok){
+            throw response.json();
+        }
+        return response.json();
+    })
+    
     // Variables for the latitude/longitude.
     .then(function (data) {
-        const lat = data.city.coord.lat;
-        const lon = data.city.coord.lon;
-        
+        let lat = data.city.coord.lat;
+        let lon = data.city.coord.lon;
+        console.log(lat);
+        console.log(lon);
+        const forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        getWeatherData(forcastUrl);
     })
     .catch(function (error) {
-        console.error('Error fetching weather data:', error);
+        console.error('Error fetching city coordinates:', error);
     });
     // API to find the weather data based on the lon/lat parameters.
-    const forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
+}
+function getWeatherData(forcastUrl){
     fetch(forcastUrl)
     .then(function (response){
         if (!response.ok){
@@ -52,8 +57,11 @@ function handleSearchForm(event) {
         }
         return response.json();
     })
-
+    .catch(function (error) {
+        console.error('Error fetching weather data:', error);
+    });
 }
+
 function inputCityButton(event){
     const searchInput = document.getElementById('search-input');
     searchInput.textContent = cityButtons.textContent;
