@@ -1,24 +1,70 @@
-
-:root{
+:root {
     --right-color: linear-gradient(to right, rgb(38, 38, 110), #333333);
     --left-color: linear-gradient(to left, rgb(38, 38, 110), #333333);
 }
-#dashboard{
+
+#dashboard {
     background-color: #888888;
 }
-#search-section{
-    width: 30vw;   
-}
-#header{
+
+#header {
     background: var(--right-color);
 }
-#city-buttons button{
-    color:azure;
+
+main {
+    display: flex;
+
+}
+
+#search-section {
+    width: 30vw;
+}
+
+#city-buttons button {
+    color: azure;
     background: var(--right-color);
     margin: 5px 0px;
-    box-shadow: 2px 2px black; 
+    box-shadow: 2px 2px black;
 }
-#city-buttons button:hover{
+
+#city-buttons button:hover {
 
     background: var(--left-color);
+}
+
+#cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: center;
+}
+
+.forecast-title,
+.daily-city {
+    flex: 1 0 100%;
+    text-align: center;
+    background: var(--right-color);
+    color: azure;
+    border: 2px solid azure;
+}
+
+.daily-card,
+.forecast-card {
+    color: azure;
+    background: var(--left-color);
+    text-align: center;
+    border: 2px solid azure;
+    flex: 1 0 100%;
+    margin-bottom: 5px;
+}
+
+.forecast-card {
+    flex: 1 0 20%;
+}
+
+
+@media screen and (max-width: 1100px) {
+    .forecast-card {
+        flex: 1 0 100%;
+    }
 }

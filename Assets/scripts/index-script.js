@@ -61,17 +61,22 @@ function getWeatherData(forcastUrl) {
         // Access data and append to the document
         .then(function (data) {
             console.log(data);
-            
+
             const dailyCard = document.createElement('div');
             dailyCard.classList.add('daily-card');
 
             const dailyCity = document.createElement('h2');
-            dailyCity.classList.add('daily-name');
+            dailyCity.classList.add('daily-city');
             dailyCity.textContent = data.city.name;
+
+            const dailyDay = document.createElement('h3');
+            dailyDay.classList.add('daily-day');
+            // dailyDay.textContent = dayjs.unix(data.list[0].dt).format("dddd");
+            dailyDay.textContent = 'Today';
 
             const dailyDate = document.createElement('p');
             dailyDate.classList.add('daily-date');
-            dailyDate.textContent = dayjs.unix(data.list[0].dt).format("MM-DD-YYYY");
+            dailyDate.textContent = dayjs.unix(data.list[0].dt).format("MMMM DD, YYYY");
 
             const dailyIcon = document.createElement('img');
             dailyIcon.classList.add('daily-icon');
@@ -80,56 +85,65 @@ function getWeatherData(forcastUrl) {
 
             const dailyHumidity = document.createElement('p');
             dailyHumidity.classList.add('daily-Humidity');
-            dailyHumidity.textContent = data.list[0].main.humidity;
-            
+            dailyHumidity.textContent = `Humidity: ${data.list[0].main.humidity}`;
+
             const dailyTemp = document.createElement('p');
             dailyTemp.classList.add('daily-Temp');
-            dailyTemp.textContent = data.list[0].main.temp;
-            
+            dailyTemp.textContent = `Temperature: ${data.list[0].main.temp}F\u00B0`;
+
             const dailyWind = document.createElement('p');
             dailyWind.classList.add('daily-Wind');
-            dailyWind.textContent = data.list[0].wind.speed;
+            dailyWind.textContent = `Wind Speed: ${data.list[0].wind.speed}MPH`;
 
-0
-            dailyCard.append(dailyCity, dailyDate, dailyIcon, dailyHumidity, dailyTemp, dailyWind);
+            dailyCard.append(dailyDay, dailyDate, dailyIcon, dailyHumidity, dailyTemp, dailyWind);
 
-            cardsSection.append(dailyCard);
+            cardsSection.append(dailyCity, dailyCard);
+
+            const forecastTitle = document.createElement('h2');
+            forecastTitle.classList.add('forecast-title');
+            forecastTitle.textContent = "5 Day forecast";
+            cardsSection.append(forecastTitle);
             // Loop thru 5 days
-            for(i = 7; i < data.list.length; i += 8) {
-                const forcastCard = document.createElement('div');
-            forcastCard.classList.add('forcast-card');
+            for (i = 7; i < data.list.length; i += 8) {
+                const forecastCard = document.createElement('div');
+                forecastCard.classList.add('forecast-card');
 
-            const forcastCity = document.createElement('h2');
-            forcastCity.classList.add('forcast-name');
-            forcastCity.textContent = data.city.name;
+                // const forecastCity = document.createElement('h2');
+                // forecastCity.classList.add('forecast-name');
+                // forecastCity.textContent = data.city.name;
 
-            const forcastDate = document.createElement('p');
-            forcastDate.classList.add('forcast-date');
-            forcastDate.textContent = dayjs.unix(data.list[i].dt).format("MM-DD-YYYY");
 
-            const forcastIcon = document.createElement('img');
-            forcastIcon.classList.add('forcast-icon');
-            iconSource = data.list[i].weather[0].icon
-            forcastIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
+                const forecastDay = document.createElement('h3');
+                forecastDay.classList.add('forecast-date');
+                forecastDay.textContent = dayjs.unix(data.list[i].dt).format("dddd");
 
-            const forcastHumidity = document.createElement('p');
-            forcastHumidity.classList.add('forcast-Humidity');
-            forcastHumidity.textContent = data.list[i].main.humidity;
-            
-            const forcastTemp = document.createElement('p');
-            forcastTemp.classList.add('forcast-Temp');
-            forcastTemp.textContent = data.list[i].main.temp;
-            
-            const forcastWind = document.createElement('p');
-            forcastWind.classList.add('forcast-Wind');
-            forcastWind.textContent = data.list[i].wind.speed;
+                const forecastDate = document.createElement('p');
+                forecastDate.classList.add('forecast-date');
+                forecastDate.textContent = dayjs.unix(data.list[i].dt).format("MMMM DD, YYYY");
 
-0
-            forcastCard.append(forcastCity, forcastDate, forcastIcon, forcastHumidity, forcastTemp, forcastWind);
+                const forecastIcon = document.createElement('img');
+                forecastIcon.classList.add('forecast-icon');
+                iconSource = data.list[i].weather[0].icon
+                forecastIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
 
-            cardsSection.append(forcastCard);
+                const forecastHumidity = document.createElement('p');
+                forecastHumidity.classList.add('forecast-Humidity');
+                forecastHumidity.textContent = `Humidity: ${data.list[i].main.humidity}`;
+
+                const forecastTemp = document.createElement('p');
+                forecastTemp.classList.add('forecast-Temp');
+                forecastTemp.textContent = `Temperature: ${data.list[i].main.temp}F\u00B0`;
+
+                const forecastWind = document.createElement('p');
+                forecastWind.classList.add('forecast-Wind');
+                forecastWind.textContent = `Wind Speed: ${data.list[i].wind.speed}MPH`;
+
+                0
+                forecastCard.append(forecastDay, forecastDate, forecastIcon, forecastHumidity, forecastTemp, forecastWind);
+
+                cardsSection.append(forecastCard);
             }
-            
+
 
 
         })
