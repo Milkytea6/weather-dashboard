@@ -2,7 +2,7 @@
 const searchForm = document.querySelector('#search-form');
 const searchButton = document.querySelector('#search-button');
 const cityButtons = document.querySelector('#city-buttons button');
-const cityCardsSection = document.querySelector('#city-cards');
+const cardsSection = document.querySelector('#cards');
 // variable for my api key.
 const apiKey = 'b52d0dab464b966c275ec23279d9be7d';
 
@@ -62,72 +62,72 @@ function getWeatherData(forcastUrl) {
         .then(function (data) {
             console.log(data);
             
-            const cityCard = document.createElement('div');
-            cityCard.classList.add('city-card');
+            const dailyCard = document.createElement('div');
+            dailyCard.classList.add('daily-card');
 
-            const cityName = document.createElement('h2');
-            cityName.classList.add('city-name');
-            cityName.textContent = data.city.name;
+            const dailyCity = document.createElement('h2');
+            dailyCity.classList.add('daily-name');
+            dailyCity.textContent = data.city.name;
 
-            const cityDate = document.createElement('p');
-            cityDate.classList.add('city-date');
-            cityDate.textContent = dayjs.unix(data.list[0].dt).format("MM-DD-YYYY");
+            const dailyDate = document.createElement('p');
+            dailyDate.classList.add('daily-date');
+            dailyDate.textContent = dayjs.unix(data.list[0].dt).format("MM-DD-YYYY");
 
-            const cityIcon = document.createElement('img');
-            cityIcon.classList.add('cityIcon');
+            const dailyIcon = document.createElement('img');
+            dailyIcon.classList.add('daily-icon');
             let iconSource = data.list[0].weather[0].icon
-            cityIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
+            dailyIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
 
-            const cityHumidity = document.createElement('p');
-            cityHumidity.classList.add('city-Humidity');
-            cityHumidity.textContent = data.list[0].main.humidity;
+            const dailyHumidity = document.createElement('p');
+            dailyHumidity.classList.add('daily-Humidity');
+            dailyHumidity.textContent = data.list[0].main.humidity;
             
-            const cityTemp = document.createElement('p');
-            cityTemp.classList.add('city-Temp');
-            cityTemp.textContent = data.list[0].main.temp;
+            const dailyTemp = document.createElement('p');
+            dailyTemp.classList.add('daily-Temp');
+            dailyTemp.textContent = data.list[0].main.temp;
             
-            const cityWind = document.createElement('p');
-            cityWind.classList.add('city-Wind');
-            cityWind.textContent = data.list[0].wind.speed;
+            const dailyWind = document.createElement('p');
+            dailyWind.classList.add('daily-Wind');
+            dailyWind.textContent = data.list[0].wind.speed;
 
 0
-            cityCard.append(cityName, cityDate, cityIcon, cityHumidity, cityTemp, cityWind);
+            dailyCard.append(dailyCity, dailyDate, dailyIcon, dailyHumidity, dailyTemp, dailyWind);
 
-            cityCardsSection.append(cityCard);
+            cardsSection.append(dailyCard);
             // Loop thru 5 days
             for(i = 7; i < data.list.length; i += 8) {
-                const cityCard = document.createElement('div');
-            cityCard.classList.add('city-card');
+                const forcastCard = document.createElement('div');
+            forcastCard.classList.add('forcast-card');
 
-            const cityName = document.createElement('h2');
-            cityName.classList.add('city-name');
-            cityName.textContent = data.city.name;
+            const forcastCity = document.createElement('h2');
+            forcastCity.classList.add('forcast-name');
+            forcastCity.textContent = data.city.name;
 
-            const cityDate = document.createElement('p');
-            cityDate.classList.add('city-date');
-            cityDate.textContent = dayjs.unix(data.list[i].dt).format("MM-DD-YYYY");
+            const forcastDate = document.createElement('p');
+            forcastDate.classList.add('forcast-date');
+            forcastDate.textContent = dayjs.unix(data.list[i].dt).format("MM-DD-YYYY");
 
-            const cityIcon = document.createElement('img');
-            cityIcon.classList.add('cityIcon');
+            const forcastIcon = document.createElement('img');
+            forcastIcon.classList.add('forcast-icon');
             iconSource = data.list[i].weather[0].icon
-            cityIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
+            forcastIcon.src = `https://openweathermap.org/img/wn/${iconSource}@2x.png`;
 
-            const cityHumidity = document.createElement('p');
-            cityHumidity.classList.add('city-Humidity');
-            cityHumidity.textContent = data.list[i].main.humidity;
+            const forcastHumidity = document.createElement('p');
+            forcastHumidity.classList.add('forcast-Humidity');
+            forcastHumidity.textContent = data.list[i].main.humidity;
             
-            const cityTemp = document.createElement('p');
-            cityTemp.classList.add('city-Temp');
-            cityTemp.textContent = data.list[i].main.temp;
+            const forcastTemp = document.createElement('p');
+            forcastTemp.classList.add('forcast-Temp');
+            forcastTemp.textContent = data.list[i].main.temp;
             
-            const cityWind = document.createElement('p');
-            cityWind.classList.add('city-Wind');
-            cityWind.textContent = data.list[i].wind.speed;
+            const forcastWind = document.createElement('p');
+            forcastWind.classList.add('forcast-Wind');
+            forcastWind.textContent = data.list[i].wind.speed;
 
 0
-            cityCard.append(cityName, cityDate, cityIcon, cityHumidity, cityTemp, cityWind);
+            forcastCard.append(forcastCity, forcastDate, forcastIcon, forcastHumidity, forcastTemp, forcastWind);
 
-            cityCardsSection.append(cityCard);
+            cardsSection.append(forcastCard);
             }
             
 
