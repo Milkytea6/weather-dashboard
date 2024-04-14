@@ -15,12 +15,14 @@
         <h1 class="title text-center text-light p-2 ">Weather Dashboard</h1>
     </header>
     <main>
-        <section id="search-section">
+        <section class="m-3" id="search-section">
             <h2 class="text-center">Search for a city:</h2>
             <form id="search-form" class="border-bottom border-dark border-5 d-flex flex-column mb-3">
                 <!--Added id's to form children for javascript query selector   -->
                 <input id="searchInput" placeholder="Enter city name...">
-                <select id="drop-down"></select>
+                <select id="drop-down">
+                    <option>Previous searches</option>
+                </select>
                 <button id="search-button" class="btn btn-block bg-primary my-3">Search</button>
             </form>
             <div id="city-buttons" class="d-flex flex-column text-light">
@@ -36,7 +38,7 @@
 
             </div>
         </section>
-        <section id="cards">
+        <section class="m-3" id="cards">
           
         </section>
 

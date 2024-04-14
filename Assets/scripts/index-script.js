@@ -1,5 +1,6 @@
 // Selects the form element in the html.
 const searchForm = document.querySelector('#search-form');
+const searchInput = document.querySelector('#searchInput');
 const searchButton = document.querySelector('#search-button');
 const cityButtons = document.querySelectorAll('.city-button');
 const cardsSection = document.querySelector('#cards');
@@ -17,7 +18,6 @@ function getLocalStorage() {
     // creates an option for each city saved in local storage
     for (i = 0; i < cities.length; i++) {
         let savedCity = cities[i];
-        console.log(typeof savedCity);
         const option = document.createElement('option');
         option.textContent = savedCity;
         option.value = savedCity;
@@ -33,7 +33,6 @@ function handleSearchForm(event) {
 
     const cityName = searchForm.searchInput.value;
     console.log(`City Name: ${cityName}`);
-    console.log(typeof cityName);
 
     // Selects the input value
     // Alerts if no input was made.
@@ -43,8 +42,10 @@ function handleSearchForm(event) {
     }
     // Saves city name to local storage
     let cities = JSON.parse(localStorage.getItem('cities') || '[]');
-    if (!cities.includes(cityName)) {
-        cities.push(cityName);
+    let cityNameLowerCase = cityName.toLowerCase();// Sets value to lowercase of input
+
+    if (!cities.some(city => city.toLowerCase() === cityNameLowerCase)) {
+        cities.push(cityName);// only pushes if input is different value ignoring case
     };
     localStorage.setItem('cities', JSON.stringify(cities));
 
@@ -68,7 +69,7 @@ function handleSearchForm(event) {
             let lon = data.city.coord.lon;
             console.log(lat);
             console.log(lon);
-            const forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            const forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
             getWeatherData(forcastUrl);
         })
         .catch(function (error) {
@@ -84,18 +85,17 @@ cityButtons.forEach(cityButton => {
         // Clears the weather data
         cardsSection.innerHTML = '';
 
-        cityButton = cityButton.textContent;
-        console.log(`City Name: ${cityButton}`);
-        console.log(typeof cityButton);
+        cityName = cityButton.textContent;
+        console.log(`City Name: ${cityName}`);
 
         // Selects the input value
         // Alerts if no input was made.
-        if (cityButton === undefined) {
+        if (cityName === undefined) {
             window.alert("Please enter a city name");
             return
         }
         // API to find the coordinates of the city.
-        const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityButton}&appid=${apiKey}`;
+        const weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
 
         // Fetch data from the weatherAPI
         fetch(weatherUrl)
@@ -110,8 +110,8 @@ cityButtons.forEach(cityButton => {
             .then(function (data) {
                 let lat = data.city.coord.lat;
                 let lon = data.city.coord.lon;
-                console.log(lat);
-                console.log(lon);
+                console.log(`lat: ${lat}`);
+                console.log(`lon: ${lon}`);
                 const forcastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
                 getWeatherData(forcastUrl);
             })
@@ -120,7 +120,7 @@ cityButtons.forEach(cityButton => {
             });
     });
 });
-
+// Gets the weather data based on the Longitude and Latitude of the city
 function getWeatherData(forcastUrl) {
     fetch(forcastUrl)
         .then(function (response) {
@@ -132,9 +132,6 @@ function getWeatherData(forcastUrl) {
         // Access data and append to the document
         .then(function (data) {
             console.log(data);
-            console.log(typeof data.city.name);
-
-
 
             const dailyCard = document.createElement('div');
             dailyCard.classList.add('daily-card');
@@ -145,7 +142,7 @@ function getWeatherData(forcastUrl) {
 
             const dailyDay = document.createElement('h3');
             dailyDay.classList.add('daily-day');
-            // dailyDay.textContent = dayjs.unix(data.list[0].dt).format("dddd");
+            // dailyDay.textContent = dayjs.unix(data.list[0].dt).format("dddd"); Saving so I can easily change the value
             dailyDay.textContent = 'Today';
 
             const dailyDate = document.createElement('p');
@@ -178,14 +175,9 @@ function getWeatherData(forcastUrl) {
             forecastTitle.textContent = "5 Day forecast";
             cardsSection.append(forecastTitle);
             // Loop thru 5 days
-            for (i = 7; i < data.list.length; i += 8) {
+            for (i = 8; i < data.list.length; i += 8) {
                 const forecastCard = document.createElement('div');
                 forecastCard.classList.add('forecast-card');
-
-                // const forecastCity = document.createElement('h2');
-                // forecastCity.classList.add('forecast-name');
-                // forecastCity.textContent = data.city.name;
-
 
                 const forecastDay = document.createElement('h3');
                 forecastDay.classList.add('forecast-date');
@@ -225,7 +217,11 @@ function getWeatherData(forcastUrl) {
             console.error('Error fetching weather data:', error);
         });
 }
-
+// Allows the selected drop down to be placed in the input feild
+dropDown.addEventListener('change', function() {
+    let selectedValue = this.value;
+    searchInput.value = selectedValue;
+});
 
 
 
