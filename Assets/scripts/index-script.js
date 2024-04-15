@@ -16,6 +16,9 @@ function getLocalStorage() {
     // clears the options 
     dropDown.innerHTML = "";
     // Checks to make sure the array is not empty
+    const option = document.createElement('option');
+        option.textContent = 'Select previous city...';
+        dropDown.append(option);
 
     // creates an option for each city saved in local storage
     for (i = 0; i < cities.length; i++) {
