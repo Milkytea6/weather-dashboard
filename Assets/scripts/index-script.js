@@ -15,6 +15,8 @@ function getLocalStorage() {
     const cities = JSON.parse(localStorage.getItem('cities'));
     // clears the options 
     dropDown.innerHTML = "";
+    // Checks to make sure the array is not empty
+
     // creates an option for each city saved in local storage
     for (i = 0; i < cities.length; i++) {
         let savedCity = cities[i];
@@ -31,7 +33,7 @@ function handleSearchForm(event) {
     event.preventDefault();
     cardsSection.innerHTML = '';
 
-    const cityName = searchForm.searchInput.value;
+    const cityName = searchForm.searchInput.value.trim();
     console.log(`City Name: ${cityName}`);
 
     // Selects the input value
@@ -175,7 +177,7 @@ function getWeatherData(forcastUrl) {
             forecastTitle.textContent = "5 Day forecast";
             cardsSection.append(forecastTitle);
             // Loop thru 5 days
-            for (i = 8; i < data.list.length; i += 8) {
+            for (i = 7; i < data.list.length; i += 8) {
                 const forecastCard = document.createElement('div');
                 forecastCard.classList.add('forecast-card');
 
